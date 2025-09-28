@@ -3,6 +3,9 @@ from pydantic import BaseModel
 import pandas as pd
 import os
 from validator import TrafficModelValidator
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 # 🏁 Punto de entrada para Railway y ejecución local
 if __name__ == "__main__":
@@ -17,6 +20,18 @@ app = FastAPI(
     title="Traffic Prediction API",
     description="API para validar y predecir congestión vial usando XGBoost",
     version="1.0"
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:5500",
+        "http://localhost:5500",
+        "https://tudominio.netlify.app",  # ← cuando lo tengas
+        "https://tudominio.vercel.app"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Instanciar el validador global
