@@ -7,6 +7,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from datetime import datetime
 import warnings
+import requests
+import os
+
 warnings.filterwarnings('ignore')
 
 class TrafficModelValidator:
@@ -50,13 +53,23 @@ class TrafficModelValidator:
         print("CARGANDO MODELO PARA VALIDACIÓN")
         print("=" * 60)
         
-        try:
-            with open("XGBoost/modelo_xgb.pkl", "rb") as f:
-                modelo_completo = pickle.load(f)
-            print("✅ XGBoost cargado correctamente desde XGBoost/")
-            
-            print("🔍 Claves disponibles en el modelo:", list(modelo_completo.keys()))
-            
+        MODEL_PATH = "XGBoost/modelo_xgb.pkl"
+        MODEL_ID = "1abSivepPN-Vm81elRa7KO-OuuDo5rBJj"  # 👈 reemplázalo con tu ID real
+        MODEL_URL = f"https://drive.google.com/uc?export=download&id={MODEL_ID}"
+
+        # 📥 Descargar automáticamente si no existe
+        if not os.path.exists(MODEL_PATH):
+            print("📥 Descargando modelo desde Google Drive...")
+            os.makedirs("XGBoost", exist_ok=True)
+            response = requests.get(MODEL_URL)
+            with open(MODEL_PATH, "wb") as f:
+                f.write(response.content)
+            print("✅ Modelo descargado correctamente")
+
+        # 🧠 Cargar el modelo
+        print("🔍 Cargando modelo...")
+        with open(MODEL_PATH, "rb") as f:
+            modelo_completo = pickle.load(f)
             # Extraer componentes
             self.xgb_model = modelo_completo['model']
             self.encoders = modelo_completo['encoders']
@@ -101,9 +114,7 @@ class TrafficModelValidator:
                 self.target_text_to_code = {cls: i for i, cls in enumerate(self.le_target.classes_)}
                 self.target_code_to_text = {i: cls for i, cls in enumerate(self.le_target.classes_)}
             
-        except Exception as e:
-            print(f"❌ Error al cargar el modelo: {e}")
-            raise
+        print("✅ Modelo cargado exitosamente")
     
     def load_original_parquet(self, file_path, n_samples=100):
         """
