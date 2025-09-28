@@ -1,21 +1,18 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # file: requirements.txt
 # ──────────────────────────────────────────────────────────────────────────────
-# Core
+# Cor
 fastapi==0.112.0
 uvicorn[standard]==0.30.6
 pydantic==2.9.1
 requests==2.32.3
 
-# Data / ML
 pandas==2.2.2
 numpy==1.26.4
 scikit-learn==1.5.1
 xgboost==2.1.1
 pyarrow==17.0.0
 
-# Plots (opcional, pero requerido por el validator)
 matplotlib==3.9.0
 seaborn==0.13.2
-
-
+requests==2.31.0
