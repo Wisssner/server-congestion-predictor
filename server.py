@@ -7,13 +7,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 
-# 🏁 Punto de entrada para Railway y ejecución local
-if __name__ == "__main__":
-    import uvicorn
-
-    # Railway asigna automáticamente el puerto a través de la variable de entorno PORT
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run("server:app", host="0.0.0.0", port=port)
 
 # Crear app FastAPI
 app = FastAPI(
@@ -197,3 +190,10 @@ def compare_predictions(req: ValidationRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error durante la comparación: {str(e)}")
+# 🏁 Punto de entrada para Railway y ejecución local
+if __name__ == "__main__":
+    import uvicorn
+
+    # Railway asigna automáticamente el puerto a través de la variable de entorno PORT
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("server:app", host="0.0.0.0", port=port)
