@@ -17,15 +17,13 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://127.0.0.1:5500",
-        "http://localhost:5500",
-        "https://tudominio.netlify.app",  # ← cuando lo tengas
-        "https://tudominio.vercel.app"
+        "*",  # 👈 prueba con esto primero para ver si se arregla
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Instanciar el validador global
 validator = TrafficModelValidator()
