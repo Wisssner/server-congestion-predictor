@@ -1,0 +1,13 @@
+# Entorno virtual
+venv/
+.env/
+
+# Datos pesados
+*.parquet
+*.pkl
+*.dll
+
+# Archivos temporales y cachés
+__pycache__/
+*.pyc
+.DS_Store
