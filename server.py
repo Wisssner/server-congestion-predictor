@@ -4,6 +4,14 @@ import pandas as pd
 import os
 from validator import TrafficModelValidator
 
+# 🏁 Punto de entrada para Railway y ejecución local
+if __name__ == "__main__":
+    import uvicorn
+
+    # Railway asigna automáticamente el puerto a través de la variable de entorno PORT
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("server:app", host="0.0.0.0", port=port)
+
 # Crear app FastAPI
 app = FastAPI(
     title="Traffic Prediction API",
